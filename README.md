@@ -1,4 +1,3 @@
-pentiumao.github.io
+PentiumAo
 ===================
 
-pages
