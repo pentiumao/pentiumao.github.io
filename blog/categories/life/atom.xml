@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: life | PentiumAo]]></title>
+  <link href="http://pentiumao.com/blog/categories/life/atom.xml" rel="self"/>
+  <link href="http://pentiumao.com/"/>
+  <updated>2013-11-01T12:39:34+08:00</updated>
+  <id>http://pentiumao.com/</id>
+  <author>
+    <name><![CDATA[Andrew.Wang]]></name>
+    <email><![CDATA[pentiumao@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[rework]]></title>
+    <link href="http://pentiumao.com/blog/2013/11/01/rework/"/>
+    <updated>2013-11-01T11:59:00+08:00</updated>
+    <id>http://pentiumao.com/blog/2013/11/01/rework</id>
+    <content type="html"><![CDATA[<p>2013.11.1 重新開始記錄日誌</p>
+
+<p><code>java
+System.out.println("hello java");
+</code></p>
+
+<p><code>objc
+NSLog(@"hello objective c");
+</code></p>
+
+<p><code>js
+alert("hello javascript");
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>
