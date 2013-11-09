@@ -4,7 +4,7 @@
   <title><![CDATA[PentiumAo]]></title>
   <link href="http://pentiumao.com/atom.xml" rel="self"/>
   <link href="http://pentiumao.com/"/>
-  <updated>2013-11-01T15:07:05+08:00</updated>
+  <updated>2013-11-09T12:17:08+08:00</updated>
   <id>http://pentiumao.com/</id>
   <author>
     <name><![CDATA[Andrew.Wang]]></name>
@@ -12,6 +12,17 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[豬仔]]></title>
+    <link href="http://pentiumao.com/blog/2013/11/09/zhuzai/"/>
+    <updated>2013-11-09T12:11:00+08:00</updated>
+    <id>http://pentiumao.com/blog/2013/11/09/zhuzai</id>
+    <content type="html"><![CDATA[<p><img src="http://ppcdn.500px.org/3658146/ecb4b6f8906d2e7ed5d4ae6e89c77e1fc1af1610/5.jpg" title="Lovely Pig" alt="#D3000"></p>
+
+<p>閒暇的週末，聽我的小豬在唱歌。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[rework]]></title>
