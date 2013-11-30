@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[PentiumAo]]></title>
-  <link href="http://pentiumao.com/atom.xml" rel="self"/>
+  <title><![CDATA[Category: 讀書筆記 | PentiumAo]]></title>
+  <link href="http://pentiumao.com/blog/categories/du-shu-bi-ji/atom.xml" rel="self"/>
   <link href="http://pentiumao.com/"/>
   <updated>2013-11-30T22:39:12+08:00</updated>
   <id>http://pentiumao.com/</id>
@@ -22,45 +22,6 @@
 [Page 59-60]</p></blockquote>
 
 <p>很有趣的一段描述，可見牛頓是多麼的牛，想必大多數人早已被這種語言邏輯繞暈了，更別說物理原理了。從這裡聯想到了計算機編程的設計模式，四人幫定義出來的23種設計模式更多是為了程序員之間更好的交流，其實大家一直在用這種或那種模式，只不過就是缺少了這種定義，沒人能說出自己的這種編程方式是什麼，互相之間的溝通產生了鴻溝，於是設計模式誕生了，這是一種高級抽象，類似於信息編碼。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[豬仔]]></title>
-    <link href="http://pentiumao.com/blog/2013/11/09/zhu-zai/"/>
-    <updated>2013-11-09T12:11:00+08:00</updated>
-    <id>http://pentiumao.com/blog/2013/11/09/zhu-zai</id>
-    <content type="html"><![CDATA[<p><img src="http://ppcdn.500px.org/3658146/ecb4b6f8906d2e7ed5d4ae6e89c77e1fc1af1610/5.jpg" title="Lovely Pig" alt="#D3000"></p>
-
-<p>閒暇的週末，聽我的小豬在唱歌。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[rework]]></title>
-    <link href="http://pentiumao.com/blog/2013/11/01/rework/"/>
-    <updated>2013-11-01T11:59:00+08:00</updated>
-    <id>http://pentiumao.com/blog/2013/11/01/rework</id>
-    <content type="html"><![CDATA[<p>2013.11.1 重新開始記錄日誌</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;hello java&quot;</span><span class="o">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;hello objective c&quot;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;hello javascript&quot;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   
