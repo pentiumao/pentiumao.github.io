@@ -3,7 +3,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>PentiumAo</title>
+	<title>Grand Central Dispatch (GCD) - 1 - PentiumAo</title>
 	<meta name="author" content="Andrew.Wang">
 
 	
@@ -75,18 +75,9 @@
 	
 		
 	
-	<div id="content" class="inner">
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/03/29/gcd/">
-		
-			Grand Central Dispatch (GCD) - 1</a>
-	</h2>
-	<div class="entry-content">
-		<p>我們在編程的時候通常一涉及異步任務都會首先想到線程（Therad），它讓多個任務同時執行成爲可能，但是如何高效的使用線程卻不是每個程序員都能輕鬆掌握的，你需要瞭解許多底層的知識來根據系統的狀態來動態管理多線程。爲此蘋果提供了多種技術解決方案，GCD就是其中之一，它提供了一種更爲方便地同步或者異步執行代碼的方式，讓程序員可以更加專注業務本身而把線程管理都交給系統去做。</p>
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Grand Central Dispatch (GCD) - 1</h2>
+	<div class="entry-content"><p>我們在編程的時候通常一涉及異步任務都會首先想到線程（Therad），它讓多個任務同時執行成爲可能，但是如何高效的使用線程卻不是每個程序員都能輕鬆掌握的，你需要瞭解許多底層的知識來根據系統的狀態來動態管理多線程。爲此蘋果提供了多種技術解決方案，GCD就是其中之一，它提供了一種更爲方便地同步或者異步執行代碼的方式，讓程序員可以更加專注業務本身而把線程管理都交給系統去做。</p>
 
 <p>GCD有以下一些優點：</p>
 
@@ -201,10 +192,7 @@
 <li><a href="http://www.galloway.me.uk/2013/05/a-look-inside-blocks-episode-3-block-copy/">《A look inside blocks: Episode 3》</a> by Matt Galloway</li>
 </ul>
 
-
-		
-		
-	</div>
+</div>
 
 
 <div class="meta">
@@ -229,214 +217,31 @@
 
 </div>
 	
-	<div class="comments"><a href="/blog/2014/03/29/gcd/#disqus_thread">Comments</a></div>
+	<div class="comments"><a href="#disqus_thread">Comments</a></div>
 	
 </div>
 </article>
 
-
-    <article class="post">
-	<h2 class="title">
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
 		
-		<a href="/blog/2014/03/01/shu-xue-gui-na-fa/">
 		
-			數學歸納法</a>
-	</h2>
-	<div class="entry-content">
-		<blockquote><p>一個定理的證明在於應用某些簡單邏輯規則，但這樣一個事實並沒有揭示數學中創造性的成分，而創造性在於對被考察的各種可能性作一選擇。大多數問題屬於沒有一般規律所循的領域，其中起作用的是經驗、類比和直觀。但是一旦敘述出正確的假設，用數學歸納法就常可提供證明。由於這樣一種證明方法並沒有給出發現過程的線索，把它稱為<strong><em>驗證</em></strong>似乎更為合適。&mdash;<a href="http://book.douban.com/subject/10455982/">《什麼是數學》</a></p></blockquote>
-
-<p>看完這段話終於解釋了我心中一直以來的一個困惑，證明其實是對之前發現的規律進行的一個邏輯驗證，而規律被發現本身經歷的大量推理、演算、抽象、歸納甚至是靈光乍現都被忽略了，而這才更應該是我們學習數學過程中追本溯源，加強鍛鍊的部分。也許過上三四年，大多數人早已忘卻了什麼是數學歸納法，但如果真的嘗試過自己去找出數字之間的奧祕，想必一定受益匪淺。而這，才應當是知識吧。</p>
-
+		<a class="addthis_button_tweet"></a>
+		
 		
 		
 	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-03-01T14:10:00+08:00" pubdate data-updated="true">Mar 1<span>st</span>, 2014</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/shu-xue/'>數學</a>
-
-
-</div>
-	
-	<div class="comments"><a href="/blog/2014/03/01/shu-xue-gui-na-fa/#disqus_thread">Comments</a></div>
 	
 </div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2013/11/30/the-information/">
-		
-			【信息簡史】讀書筆記一</a>
-	</h2>
-	<div class="entry-content">
-		<blockquote><p>當牛頓開始著手他偉大的事業時，他首先遇到的問題是一些重要的概念缺乏明確的定義。對此，他一開始施了個障眼法：『我不去定義時間、空間、位置和運動，因為這些都是眾所周知的。』但實際上，定義這些用語正是他的目的所在。在當時，重量和度量都沒有統一的標準，而且重量和量度本身就是含混不清的用語。拉丁語似乎比英語要可靠些，因為它較少在日常使用中被濫用，但它也缺少很多必要的概念。牛頓的原始筆記揭示了在其成品中看不到的推敲琢磨。他嘗試過像<strong>物質的量</strong>這樣的用語。這個概念如果讓考德裏來解釋的話，未免太過艱難，因為他對於物質的定義只是：『materiall，具有一些質量或重要性。』而牛頓自己將這個用語定義為：『可由其密度和體積共同得出。』他進一步指明：『此後提到物體或質量，我指的都是這個量。』可見，沒有一個恰當的用語，他就寸步難行。其他的，如速度，力，重力，在當時也沒有適當的定義。它們無法以互相解釋的方式加以定義，也沒有一種可見的存在能讓人用手指出，更沒有一本書可供查閱。
-[Page 59-60]</p></blockquote>
-
-<p>很有趣的一段描述，可見牛頓是多麼的牛，想必大多數人早已被這種語言邏輯繞暈了，更別說物理原理了。從這裡聯想到了計算機編程的設計模式，四人幫定義出來的23種設計模式更多是為了程序員之間更好的交流，其實大家一直在用這種或那種模式，只不過就是缺少了這種定義，沒人能說出自己的這種編程方式是什麼，互相之間的溝通產生了鴻溝，於是設計模式誕生了，這是一種高級抽象，類似於信息編碼。</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
 
 
 
-
-
-
-
-
-  
-
-
-<time datetime="2013-11-30T22:12:00+08:00" pubdate data-updated="true">Nov 30<span>th</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/du-shu-bi-ji/'>讀書筆記</a>
-
-
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
-	
-	<div class="comments"><a href="/blog/2013/11/30/the-information/#disqus_thread">Comments</a></div>
-	
+</section>
 </div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2013/11/09/zhu-zai/">
-		
-			豬仔</a>
-	</h2>
-	<div class="entry-content">
-		<p><img src="http://ppcdn.500px.org/3658146/ecb4b6f8906d2e7ed5d4ae6e89c77e1fc1af1610/5.jpg" title="Lovely Pig" alt="#D3000"></p>
-
-<p>閒暇的週末，聽我的小豬在唱歌。</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-11-09T12:11:00+08:00" pubdate data-updated="true">Nov 9<span>th</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/she-ying/'>攝影</a>
-
-
-</div>
-	
-	<div class="comments"><a href="/blog/2013/11/09/zhu-zai/#disqus_thread">Comments</a></div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2013/11/01/rework/">
-		
-			Rework</a>
-	</h2>
-	<div class="entry-content">
-		<p>2013.11.1 重新開始記錄日誌</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;hello java&quot;</span><span class="o">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;hello objective c&quot;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;hello javascript&quot;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-11-01T11:59:00+08:00" pubdate data-updated="true">Nov 1<span>st</span>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/sheng-huo/'>生活</a>
-
-
-</div>
-	
-	<div class="comments"><a href="/blog/2013/11/01/rework/#disqus_thread">Comments</a></div>
-	
-</div>
-</article>
-
-<nav id="pagenavi">
-    
-    
-    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
-</nav></div>
 	<footer id="footer" class="inner">Copyright &copy; 2014
 
     Andrew.Wang
@@ -455,7 +260,10 @@
       var disqus_shortname = 'pentiumao';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://pentiumao.com/blog/2014/03/29/gcd/';
+        var disqus_url = 'http://pentiumao.com/blog/2014/03/29/gcd/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

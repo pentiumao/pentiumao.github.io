@@ -7,7 +7,7 @@
 	<meta name="author" content="Andrew.Wang">
 
 	
-	<meta name="description" content="一個定理的證明在於應用某些簡單邏輯規則，但這樣一個事實並沒有揭示數學中創造性的成分，而創造性在於對被考察的各種可能性作一選擇。大多數問題屬於沒有一般規律所循的領域，其中起作用的是經驗、類比和直觀。但是一旦敘述出正確的假設，用數學歸納法就常可提供證明。由於這樣一種證明方法並沒有給出發現過程的線索， &hellip;">
+	<meta name="description" content="我們在編程的時候通常一涉及異步任務都會首先想到線程（Therad），它讓多個任務同時執行成爲可能，但是如何高效的使用線程卻不是每個程序員都能輕鬆掌握的，你需要瞭解許多底層的知識來根據系統的狀態來動態管理多線程。爲此蘋果提供了多種技術解決方案，GCD就是其中之一， &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -76,6 +76,163 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/03/29/gcd/">
+		
+			Grand Central Dispatch (GCD) - 1</a>
+	</h2>
+	<div class="entry-content">
+		<p>我們在編程的時候通常一涉及異步任務都會首先想到線程（Therad），它讓多個任務同時執行成爲可能，但是如何高效的使用線程卻不是每個程序員都能輕鬆掌握的，你需要瞭解許多底層的知識來根據系統的狀態來動態管理多線程。爲此蘋果提供了多種技術解決方案，GCD就是其中之一，它提供了一種更爲方便地同步或者異步執行代碼的方式，讓程序員可以更加專注業務本身而把線程管理都交給系統去做。</p>
+
+<p>GCD有以下一些優點：</p>
+
+<ul>
+<li>它提供了足夠簡單的接口</li>
+<li>它提供了全面、自動化的線程池管理</li>
+<li>它保證了整體性能</li>
+<li>內存使用更爲高效（因爲線程棧不再依賴與應用）</li>
+<li>高負載下它不會拖累內核</li>
+<li>向隊列中異步分發任務不會造成死鎖</li>
+<li>在資源不足時能夠優雅地進行擴展</li>
+<li>串行隊列提供了更爲高效的替代鎖或者其它同步方式的方案</li>
+</ul>
+
+
+<p>提交給隊列的任務需要被封裝在<code>Function</code>或者<code>Block</code>中。Block是作爲C語言的擴展特性在OS X v10.6和iOS 4.0被蘋果引入的，所以同樣也可以在C++和Objective-C中使用。它在概念上和函數指針類似，不過具有一些更多的優勢，比如<a href="http://zh.wikipedia.org/wiki/%E9%97%AD%E5%8C%85_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6">閉包</a>，簡單來說就是函數在脫離創建它的環境後仍然可以訪問其創建環境的變量。</p>
+
+<p>下面就來介紹下GCD的幾個基本概念。</p>
+
+<h2>GCD的三種隊列</h2>
+
+<ol>
+<li><p>串行隊列（Serial queue）</p>
+
+<p> 串行執行，每個隊列中同時只有一個任務被執行，先進先出（FIFO）。可以創建多個串行隊列，不同的串行隊列是并行執行的。</p></li>
+<li><p>并行隊列（Concurrent queue）</p>
+
+<p> 并行執行，每個隊列中同時有多個任務被執行，任務被喚起的順序同樣是先進先出（FIFO），不過任務的完成順序不確定，同時執行的任務數也由系統當前狀況決定。</p>
+
+<p> 系統已經創建好4個全局的并行隊列可供使用，它們的優先級不同：</p>
+
+<ul>
+<li><code>DISPATCH_QUEUE_PRIORITY_HIGH</code></li>
+<li><code>DISPATCH_QUEUE_PRIORITY_DEFAULT</code></li>
+<li><code>DISPATCH_QUEUE_PRIORITY_LOW</code></li>
+<li><code>DISPATCH_QUEUE_PRIORITY_BACKGROUND</code></li>
+</ul>
+</li>
+<li><p>主隊列（Main dispatch queue）</p>
+
+<p> 程序的主線程隊列，唯一，所以是個串行隊列，可以通過<code>dispatch_get_main_queue()</code>獲得。</p></li>
+</ol>
+
+
+<h2>獲取全局并行隊列</h2>
+
+<p>如果你有多个任务希望并行执行的话，那么并行队列将会非常有用。</p>
+
+<p>由於系統已經創建了四個<em>全局</em>的并行隊列，你可以通過<code>dispatch_get_global_queue()</code>函數輕鬆地獲得一個隊列：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">dispatch_queue_t</span> <span class="n">queue</span> <span class="o">=</span> <span class="n">dispatch_get_global_queue</span><span class="p">(</span><span class="n">DISPATCH_QUEUE_PRIORITY_DEFAULT</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<blockquote><p>注意：第二個參數是爲了方便以後擴展，目前如果傳入非零值會導致返回<code>NULL</code> 。由於這四個隊列是針對應用全局的，所以任何<code>retain</code>或者<code>release</code>操作都會被忽略掉，這意味着你無需持有這四個隊列的引用，直接調用函數好了，上面這行代碼只是爲了便於理解。</p></blockquote>
+
+<h2>創建串行隊列</h2>
+
+<p>如果你希望多個任務以指定的順序執行，那么串行隊列就會是你想要的，它甚至可以代替鎖来保護公共資源的線程安全。和并行隊列不同的是，你必須自己來創建和管理串行隊列，但是請避免創建過多的隊列導致性能的下降。</p>
+
+<p>可以通過以下代碼來創建一個串行隊列：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">dispatch_queue_t</span> <span class="n">queue</span> <span class="o">=</span> <span class="n">dispatch_queue_create</span><span class="p">(</span><span class="s">&quot;com.kdalabs.test&quot;</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<blockquote><p>注意：<code>dispatch_queue_create</code>的第一個參數是隊列名，方便調試時追蹤；第二個參數接收<code>DISPATCH_QUEUE_SERIAL</code>、<code>DISPATCH_QUEUE_CONCURRENT</code>（从iOS5開始）或者<code>NULL</code>三個值，<code>DISPATCH_QUEUE_SERIAL</code>和<code>NULL</code>是等效的，都會創建一個串行隊列，<code>DISPATCH_QUEUE_CONCURRENT</code>則會創建一個并行隊列。</p></blockquote>
+
+<h2>向隊列添加任務</h2>
+
+<p>你既可以同步分發任務，也可以異步分發任務：</p>
+
+<ul>
+<li><p>同步（阻塞式），直到任務執行完成才返回。</p>
+
+<ul>
+<li><code>dispatch_sync</code></li>
+<li><code>dispatch_sync_f</code></li>
+</ul>
+</li>
+<li><p>異步（非阻塞式），將任務加入隊列馬上返回。</p>
+
+<ul>
+<li><code>dispatch_async</code></li>
+<li><code>dispatch_async_f</code></li>
+</ul>
+</li>
+</ul>
+
+
+<p>你還可以群發任務：</p>
+
+<ul>
+<li><code>dispatch_apply</code></li>
+<li><code>dispatch_apply_f</code></li>
+</ul>
+
+
+<h2>結論</h2>
+
+<p>至此你已經瞭解了關於GCD的一些基本知識，下一篇文章將介紹具體如何使用GCD。</p>
+
+<h2>参考</h2>
+
+<ul>
+<li><a href="https://developer.apple.com/library/ios/documentation/general/conceptual/concurrencyprogrammingguide/Introduction/Introduction.html">《Concurrency Programming Guide》</a> by Apple</li>
+<li><a href="http://www.hrchen.com/2013/07/multi-threading-programming-of-ios-part-3/">《iOS多线程编程Part 3/3 &ndash; GCD》</a> by hrchen</li>
+<li><a href="http://www.galloway.me.uk/2012/10/a-look-inside-blocks-episode-1/">《A look inside blocks: Episode 1》</a> by Matt Galloway</li>
+<li><a href="http://www.galloway.me.uk/2012/10/a-look-inside-blocks-episode-2/">《A look inside blocks: Episode 2》</a> by Matt Galloway</li>
+<li><a href="http://www.galloway.me.uk/2013/05/a-look-inside-blocks-episode-3-block-copy/">《A look inside blocks: Episode 3》</a> by Matt Galloway</li>
+</ul>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-29T14:42:00+08:00" pubdate data-updated="true">Mar 29<span>th</span>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/ios/'>iOS</a>
+
+
+</div>
+	
+	<div class="comments"><a href="/blog/2014/03/29/gcd/#disqus_thread">Comments</a></div>
+	
+</div>
+</article>
 
 
     <article class="post">

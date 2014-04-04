@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[PentiumAo]]></title>
-  <link href="http://pentiumao.com/atom.xml" rel="self"/>
+  <title><![CDATA[Category: iOS | PentiumAo]]></title>
+  <link href="http://pentiumao.com/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://pentiumao.com/"/>
   <updated>2014-04-04T16:13:52+08:00</updated>
   <id>http://pentiumao.com/</id>
@@ -69,10 +69,9 @@
 
 <p>由於系統已經創建了四個<em>全局</em>的并行隊列，你可以通過<code>dispatch_get_global_queue()</code>函數輕鬆地獲得一個隊列：</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">dispatch_queue_t</span> <span class="n">queue</span> <span class="o">=</span> <span class="n">dispatch_get_global_queue</span><span class="p">(</span><span class="n">DISPATCH_QUEUE_PRIORITY_DEFAULT</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <blockquote><p>注意：第二個參數是爲了方便以後擴展，目前如果傳入非零值會導致返回<code>NULL</code> 。由於這四個隊列是針對應用全局的，所以任何<code>retain</code>或者<code>release</code>操作都會被忽略掉，這意味着你無需持有這四個隊列的引用，直接調用函數好了，上面這行代碼只是爲了便於理解。</p></blockquote>
 
@@ -82,10 +81,9 @@
 
 <p>可以通過以下代碼來創建一個串行隊列：</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">dispatch_queue_t</span> <span class="n">queue</span> <span class="o">=</span> <span class="n">dispatch_queue_create</span><span class="p">(</span><span class="s">&quot;com.kdalabs.test&quot;</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">dispatch_queue_t</span> <span class="n">queue</span> <span class="o">=</span> <span class="n">dispatch_queue_create</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">com</span><span class="p">.</span><span class="n">kdalabs</span><span class="p">.</span><span class="n">test</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;,</span> <span class="nb">NULL</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
 
 <blockquote><p>注意：<code>dispatch_queue_create</code>的第一個參數是隊列名，方便調試時追蹤；第二個參數接收<code>DISPATCH_QUEUE_SERIAL</code>、<code>DISPATCH_QUEUE_CONCURRENT</code>（从iOS5開始）或者<code>NULL</code>三個值，<code>DISPATCH_QUEUE_SERIAL</code>和<code>NULL</code>是等效的，都會創建一個串行隊列，<code>DISPATCH_QUEUE_CONCURRENT</code>則會創建一個并行隊列。</p></blockquote>
 
@@ -132,68 +130,6 @@
 <li><a href="http://www.galloway.me.uk/2012/10/a-look-inside-blocks-episode-2/">《A look inside blocks: Episode 2》</a> by Matt Galloway</li>
 <li><a href="http://www.galloway.me.uk/2013/05/a-look-inside-blocks-episode-3-block-copy/">《A look inside blocks: Episode 3》</a> by Matt Galloway</li>
 </ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[數學歸納法]]></title>
-    <link href="http://pentiumao.com/blog/2014/03/01/shu-xue-gui-na-fa/"/>
-    <updated>2014-03-01T14:10:00+08:00</updated>
-    <id>http://pentiumao.com/blog/2014/03/01/shu-xue-gui-na-fa</id>
-    <content type="html"><![CDATA[<blockquote><p>一個定理的證明在於應用某些簡單邏輯規則，但這樣一個事實並沒有揭示數學中創造性的成分，而創造性在於對被考察的各種可能性作一選擇。大多數問題屬於沒有一般規律所循的領域，其中起作用的是經驗、類比和直觀。但是一旦敘述出正確的假設，用數學歸納法就常可提供證明。由於這樣一種證明方法並沒有給出發現過程的線索，把它稱為<strong><em>驗證</em></strong>似乎更為合適。&mdash;<a href="http://book.douban.com/subject/10455982/">《什麼是數學》</a></p></blockquote>
-
-<p>看完這段話終於解釋了我心中一直以來的一個困惑，證明其實是對之前發現的規律進行的一個邏輯驗證，而規律被發現本身經歷的大量推理、演算、抽象、歸納甚至是靈光乍現都被忽略了，而這才更應該是我們學習數學過程中追本溯源，加強鍛鍊的部分。也許過上三四年，大多數人早已忘卻了什麼是數學歸納法，但如果真的嘗試過自己去找出數字之間的奧祕，想必一定受益匪淺。而這，才應當是知識吧。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[【信息簡史】讀書筆記一]]></title>
-    <link href="http://pentiumao.com/blog/2013/11/30/the-information/"/>
-    <updated>2013-11-30T22:12:00+08:00</updated>
-    <id>http://pentiumao.com/blog/2013/11/30/the-information</id>
-    <content type="html"><![CDATA[<blockquote><p>當牛頓開始著手他偉大的事業時，他首先遇到的問題是一些重要的概念缺乏明確的定義。對此，他一開始施了個障眼法：『我不去定義時間、空間、位置和運動，因為這些都是眾所周知的。』但實際上，定義這些用語正是他的目的所在。在當時，重量和度量都沒有統一的標準，而且重量和量度本身就是含混不清的用語。拉丁語似乎比英語要可靠些，因為它較少在日常使用中被濫用，但它也缺少很多必要的概念。牛頓的原始筆記揭示了在其成品中看不到的推敲琢磨。他嘗試過像<strong>物質的量</strong>這樣的用語。這個概念如果讓考德裏來解釋的話，未免太過艱難，因為他對於物質的定義只是：『materiall，具有一些質量或重要性。』而牛頓自己將這個用語定義為：『可由其密度和體積共同得出。』他進一步指明：『此後提到物體或質量，我指的都是這個量。』可見，沒有一個恰當的用語，他就寸步難行。其他的，如速度，力，重力，在當時也沒有適當的定義。它們無法以互相解釋的方式加以定義，也沒有一種可見的存在能讓人用手指出，更沒有一本書可供查閱。
-[Page 59-60]</p></blockquote>
-
-<p>很有趣的一段描述，可見牛頓是多麼的牛，想必大多數人早已被這種語言邏輯繞暈了，更別說物理原理了。從這裡聯想到了計算機編程的設計模式，四人幫定義出來的23種設計模式更多是為了程序員之間更好的交流，其實大家一直在用這種或那種模式，只不過就是缺少了這種定義，沒人能說出自己的這種編程方式是什麼，互相之間的溝通產生了鴻溝，於是設計模式誕生了，這是一種高級抽象，類似於信息編碼。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[豬仔]]></title>
-    <link href="http://pentiumao.com/blog/2013/11/09/zhu-zai/"/>
-    <updated>2013-11-09T12:11:00+08:00</updated>
-    <id>http://pentiumao.com/blog/2013/11/09/zhu-zai</id>
-    <content type="html"><![CDATA[<p><img src="http://ppcdn.500px.org/3658146/ecb4b6f8906d2e7ed5d4ae6e89c77e1fc1af1610/5.jpg" title="Lovely Pig" alt="#D3000"></p>
-
-<p>閒暇的週末，聽我的小豬在唱歌。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[rework]]></title>
-    <link href="http://pentiumao.com/blog/2013/11/01/rework/"/>
-    <updated>2013-11-01T11:59:00+08:00</updated>
-    <id>http://pentiumao.com/blog/2013/11/01/rework</id>
-    <content type="html"><![CDATA[<p>2013.11.1 重新開始記錄日誌</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;hello java&quot;</span><span class="o">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;hello objective c&quot;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;hello javascript&quot;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
 
 ]]></content>
   </entry>
