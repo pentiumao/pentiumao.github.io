@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>PentiumAo</title>
+    <description>Developer</description>
+    <link>www.pentiumao.com</link>
+    <atom:link href="www.pentiumao.com/feed.xml" rel="self" type="application/rss+xml" />
+    
+      <item>
+        <title>点滴</title>
+        <description>&lt;p&gt;最近看到一个社会实验视频比较火，目的在于观察人们对于青少年之间霸凌问题的反应，令人欣慰的是大多数人会干预制止，当然这也跟取样人群有关，我相信在某些地方结果会刚刚相反。&lt;/p&gt;
+
+&lt;iframe width=&quot;560&quot; height=&quot;420&quot; src=&quot;http://player.youku.com/embed/XMTM3MTMwMDI2OA==&quot; play=false frameborder=0 allowfullscreen&gt;&lt;/iframe&gt;
+
+&lt;p&gt;看完视频，一个场景马上闪现在我的大脑中挥之不去：&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;刚上初中的时候，同班的一个女同学由于个子最矮总站在队伍最前面，我完全没有恶意地以身高问题取笑了这个女同学，而这个同学也总以「你也高不到那去」来回应我（我确实也个子不高，所以我那时并不认为这个玩笑有任何过分的地方）。后来某一天，我无意中看到了这个同学的周记，里面很正式地跟老师反馈了这个问题，而我当时的反应是，这也太小题大作了吧，我只是开个玩笑而已啊。可想而知，那个同学的关系跟我也好不到哪去。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;今天想想，以他人的短处来取笑对方，的确是很恶劣的行为，在自己看来无关痛痒的几句话，也许对别人就是一根根毒刺，甚至留下永远也不会痊愈的伤痕。&lt;/p&gt;
+</description>
+        <pubDate>Sun, 01 Nov 2015 16:44:00 +0800</pubDate>
+        <link>www.pentiumao.com/%E7%94%9F%E6%B4%BB/2015/11/01/record/</link>
+        <guid isPermaLink="true">www.pentiumao.com/%E7%94%9F%E6%B4%BB/2015/11/01/record/</guid>
+      </item>
+    
+      <item>
+        <title>Grand Central Dispatch (GCD) - 1</title>
+        <description>&lt;p&gt;我們在編程的時候通常一涉及異步任務都會首先想到線程（Therad），它讓多個任務同時執行成爲可能，但是如何高效的使用線程卻不是每個程序員都能輕鬆掌握的，你需要瞭解許多底層的知識來根據系統的狀態來動態管理多線程。爲此蘋果提供了多種技術解決方案，GCD就是其中之一，它提供了一種更爲方便地同步或者異步執行代碼的方式，讓程序員可以更加專注業務本身而把線程管理都交給系統去做。&lt;/p&gt;
+
+&lt;p&gt;GCD有以下一些優點：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;它提供了足夠簡單的接口&lt;/li&gt;
+&lt;li&gt;它提供了全面、自動化的線程池管理&lt;/li&gt;
+&lt;li&gt;它保證了整體性能&lt;/li&gt;
+&lt;li&gt;內存使用更爲高效（因爲線程棧不再依賴與應用）&lt;/li&gt;
+&lt;li&gt;高負載下它不會拖累內核&lt;/li&gt;
+&lt;li&gt;向隊列中異步分發任務不會造成死鎖&lt;/li&gt;
+&lt;li&gt;在資源不足時能夠優雅地進行擴展&lt;/li&gt;
+&lt;li&gt;串行隊列提供了更爲高效的替代鎖或者其它同步方式的方案&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;提交給隊列的任務需要被封裝在&lt;code&gt;Function&lt;/code&gt;或者&lt;code&gt;Block&lt;/code&gt;中。Block是作爲C語言的擴展特性在OS X v10.6和iOS 4.0被蘋果引入的，所以同樣也可以在C++和Objective-C中使用。它在概念上和函數指針類似，不過具有一些更多的優勢，比如&lt;a href=&quot;http://zh.wikipedia.org/wiki/%E9%97%AD%E5%8C%85_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)&quot;&gt;閉包&lt;/a&gt;，簡單來說就是函數在脫離創建它的環境後仍然可以訪問其創建環境的變量。&lt;/p&gt;
+
+&lt;p&gt;下面就來介紹下GCD的幾個基本概念。&lt;/p&gt;
+
+&lt;h2&gt;GCD的三種隊列&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;串行隊列（Serial queue）&lt;/p&gt;
+
+&lt;p&gt;串行執行，每個隊列中同時只有一個任務被執行，先進先出（FIFO）。可以創建多個串行隊列，不同的串行隊列是并行執行的。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;并行隊列（Concurrent queue）&lt;/p&gt;
+
+&lt;p&gt;并行執行，每個隊列中同時有多個任務被執行，任務被喚起的順序同樣是先進先出（FIFO），不過任務的完成順序不確定，同時執行的任務數也由系統當前狀況決定。&lt;/p&gt;
+
+&lt;p&gt;系統已經創建好4個全局的并行隊列可供使用，它們的優先級不同：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;DISPATCH&lt;em&gt;QUEUE&lt;/em&gt;PRIORITY_HIGH&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;DISPATCH&lt;em&gt;QUEUE&lt;/em&gt;PRIORITY_DEFAULT&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;DISPATCH&lt;em&gt;QUEUE&lt;/em&gt;PRIORITY_LOW&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;DISPATCH&lt;em&gt;QUEUE&lt;/em&gt;PRIORITY_BACKGROUND&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;主隊列（Main dispatch queue）&lt;/p&gt;
+
+&lt;p&gt;程序的主線程隊列，唯一，所以是個串行隊列，可以通過&lt;code&gt;dispatch&lt;em&gt;get&lt;/em&gt;main_queue()&lt;/code&gt;獲得。&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2&gt;獲取全局并行隊列&lt;/h2&gt;
+
+&lt;p&gt;如果你有多个任务希望并行执行的话，那么并行队列将会非常有用。&lt;/p&gt;
+
+&lt;p&gt;由於系統已經創建了四個&lt;em&gt;全局&lt;/em&gt;的并行隊列，你可以通過&lt;code&gt;dispatch&lt;em&gt;get&lt;/em&gt;global_queue()&lt;/code&gt;函數輕鬆地獲得一個隊列：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-objc&quot; data-lang=&quot;objc&quot;&gt;&lt;span class=&quot;kt&quot;&gt;dispatch_queue_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dispatch_get_global_queue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DISPATCH_QUEUE_PRIORITY_DEFAULT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;注意：第二個參數是爲了方便以後擴展，目前如果傳入非零值會導致返回&lt;code&gt;NULL&lt;/code&gt; 。由於這四個隊列是針對應用全局的，所以任何&lt;code&gt;retain&lt;/code&gt;或者&lt;code&gt;release&lt;/code&gt;操作都會被忽略掉，這意味着你無需持有這四個隊列的引用，直接調用函數好了，上面這行代碼只是爲了便於理解。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2&gt;創建串行隊列&lt;/h2&gt;
+
+&lt;p&gt;如果你希望多個任務以指定的順序執行，那么串行隊列就會是你想要的，它甚至可以代替鎖来保護公共資源的線程安全。和并行隊列不同的是，你必須自己來創建和管理串行隊列，但是請避免創建過多的隊列導致性能的下降。&lt;/p&gt;
+
+&lt;p&gt;可以通過以下代碼來創建一個串行隊列：&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-objc&quot; data-lang=&quot;objc&quot;&gt;&lt;span class=&quot;kt&quot;&gt;dispatch_queue_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;queue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dispatch_queue_create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;com.kdalabs.test&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;注意：&lt;code&gt;dispatch&lt;em&gt;queue&lt;/em&gt;create&lt;/code&gt;的第一個參數是隊列名，方便調試時追蹤；第二個參數接收&lt;code&gt;DISPATCH&lt;em&gt;QUEUE&lt;/em&gt;SERIAL&lt;/code&gt;、&lt;code&gt;DISPATCH&lt;em&gt;QUEUE&lt;/em&gt;CONCURRENT&lt;/code&gt;（从iOS5開始）或者&lt;code&gt;NULL&lt;/code&gt;三個值，&lt;code&gt;DISPATCH&lt;em&gt;QUEUE&lt;/em&gt;SERIAL&lt;/code&gt;和&lt;code&gt;NULL&lt;/code&gt;是等效的，都會創建一個串行隊列，&lt;code&gt;DISPATCH&lt;em&gt;QUEUE&lt;/em&gt;CONCURRENT&lt;/code&gt;則會創建一個并行隊列。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2&gt;向隊列添加任務&lt;/h2&gt;
+
+&lt;p&gt;你既可以同步分發任務，也可以異步分發任務：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;同步（阻塞式），直到任務執行完成才返回。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;dispatch_sync&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dispatch&lt;em&gt;sync&lt;/em&gt;f&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;異步（非阻塞式），將任務加入隊列馬上返回。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;dispatch_async&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dispatch&lt;em&gt;async&lt;/em&gt;f&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;你還可以群發任務：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;dispatch_apply&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dispatch&lt;em&gt;apply&lt;/em&gt;f&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;結論&lt;/h2&gt;
+
+&lt;p&gt;至此你已經瞭解了關於GCD的一些基本知識，下一篇文章將介紹具體如何使用GCD。&lt;/p&gt;
+
+&lt;h2&gt;参考&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://developer.apple.com/library/ios/documentation/general/conceptual/concurrencyprogrammingguide/Introduction/Introduction.html&quot;&gt;《Concurrency Programming Guide》&lt;/a&gt; by Apple&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.hrchen.com/2013/07/multi-threading-programming-of-ios-part-3/&quot;&gt;《iOS多线程编程Part 3/3 - GCD》&lt;/a&gt; by hrchen&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.galloway.me.uk/2012/10/a-look-inside-blocks-episode-1/&quot;&gt;《A look inside blocks: Episode 1》&lt;/a&gt; by Matt Galloway&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.galloway.me.uk/2012/10/a-look-inside-blocks-episode-2/&quot;&gt;《A look inside blocks: Episode 2》&lt;/a&gt; by Matt Galloway&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.galloway.me.uk/2013/05/a-look-inside-blocks-episode-3-block-copy/&quot;&gt;《A look inside blocks: Episode 3》&lt;/a&gt; by Matt Galloway&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sat, 29 Mar 2014 14:42:00 +0800</pubDate>
+        <link>www.pentiumao.com/ios/2014/03/29/gcd/</link>
+        <guid isPermaLink="true">www.pentiumao.com/ios/2014/03/29/gcd/</guid>
+      </item>
+    
+      <item>
+        <title>數學歸納法</title>
+        <description>&lt;blockquote&gt;
+&lt;p&gt;一個定理的證明在於應用某些簡單邏輯規則，但這樣一個事實並沒有揭示數學中創造性的成分，而創造性在於對被考察的各種可能性作一選擇。大多數問題屬於沒有一般規律所循的領域，其中起作用的是經驗、類比和直觀。但是一旦敘述出正確的假設，用數學歸納法就常可提供證明。由於這樣一種證明方法並沒有給出發現過程的線索，把它稱為&lt;strong&gt;&lt;em&gt;驗證&lt;/em&gt;&lt;/strong&gt;似乎更為合適。&amp;ndash;&lt;a href=&quot;http://book.douban.com/subject/10455982/&quot;&gt;《什麼是數學》&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;看完這段話終於解釋了我心中一直以來的一個困惑，證明其實是對之前發現的規律進行的一個邏輯驗證，而規律被發現本身經歷的大量推理、演算、抽象、歸納甚至是靈光乍現都被忽略了，而這才更應該是我們學習數學過程中追本溯源，加強鍛鍊的部分。也許過上三四年，大多數人早已忘卻了什麼是數學歸納法，但如果真的嘗試過自己去找出數字之間的奧祕，想必一定受益匪淺。而這，才應當是知識吧。&lt;/p&gt;
+</description>
+        <pubDate>Sat, 01 Mar 2014 14:10:00 +0800</pubDate>
+        <link>www.pentiumao.com/%E6%95%B8%E5%AD%B8/2014/03/01/shu-xue-gui-na-fa/</link>
+        <guid isPermaLink="true">www.pentiumao.com/%E6%95%B8%E5%AD%B8/2014/03/01/shu-xue-gui-na-fa/</guid>
+      </item>
+    
+      <item>
+        <title>讀書筆記《信息簡史》</title>
+        <description>&lt;blockquote&gt;
+&lt;p&gt;當牛頓開始著手他偉大的事業時，他首先遇到的問題是一些重要的概念缺乏明確的定義。對此，他一開始施了個障眼法：『我不去定義時間、空間、位置和運動，因為這些都是眾所周知的。』但實際上，定義這些用語正是他的目的所在。在當時，重量和度量都沒有統一的標準，而且重量和量度本身就是含混不清的用語。拉丁語似乎比英語要可靠些，因為它較少在日常使用中被濫用，但它也缺少很多必要的概念。牛頓的原始筆記揭示了在其成品中看不到的推敲琢磨。他嘗試過像&lt;strong&gt;物質的量&lt;/strong&gt;這樣的用語。這個概念如果讓考德裏來解釋的話，未免太過艱難，因為他對於物質的定義只是：『materiall，具有一些質量或重要性。』而牛頓自己將這個用語定義為：『可由其密度和體積共同得出。』他進一步指明：『此後提到物體或質量，我指的都是這個量。』可見，沒有一個恰當的用語，他就寸步難行。其他的，如速度，力，重力，在當時也沒有適當的定義。它們無法以互相解釋的方式加以定義，也沒有一種可見的存在能讓人用手指出，更沒有一本書可供查閱。
+[Page 59-60]&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;很有趣的一段描述，可見牛頓是多麼的牛，想必大多數人早已被這種語言邏輯繞暈了，更別說物理原理了。從這裡聯想到了計算機編程的設計模式，四人幫定義出來的23種設計模式更多是為了程序員之間更好的交流，其實大家一直在用這種或那種模式，只不過就是缺少了這種定義，沒人能說出自己的這種編程方式是什麼，互相之間的溝通產生了鴻溝，於是設計模式誕生了，這是一種高級抽象，類似於信息編碼。&lt;/p&gt;
+</description>
+        <pubDate>Sat, 30 Nov 2013 22:12:00 +0800</pubDate>
+        <link>www.pentiumao.com/%E8%AE%80%E6%9B%B8%E7%AD%86%E8%A8%98/2013/11/30/the-information/</link>
+        <guid isPermaLink="true">www.pentiumao.com/%E8%AE%80%E6%9B%B8%E7%AD%86%E8%A8%98/2013/11/30/the-information/</guid>
+      </item>
+    
+      <item>
+        <title>豬仔</title>
+        <description>&lt;p&gt;&lt;img src=&quot;http://ppcdn.500px.org/3658146/ecb4b6f8906d2e7ed5d4ae6e89c77e1fc1af1610/5.jpg&quot; alt=&quot;Lovely Pig&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;閒暇的週末，聽我的小豬在唱歌。&lt;/p&gt;
+</description>
+        <pubDate>Sat, 09 Nov 2013 12:11:00 +0800</pubDate>
+        <link>www.pentiumao.com/%E6%94%9D%E5%BD%B1/2013/11/09/zhu-zai/</link>
+        <guid isPermaLink="true">www.pentiumao.com/%E6%94%9D%E5%BD%B1/2013/11/09/zhu-zai/</guid>
+      </item>
+    
+      <item>
+        <title>rework</title>
+        <description>&lt;p&gt;2013.11.1 重新開始記錄日誌&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;hello java&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-objective-c&quot; data-lang=&quot;objective-c&quot;&gt;&lt;span class=&quot;n&quot;&gt;NSLog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;hello objective c&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span class=&quot;nx&quot;&gt;alert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;hello javascript&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+</description>
+        <pubDate>Fri, 01 Nov 2013 11:59:00 +0800</pubDate>
+        <link>www.pentiumao.com/%E7%94%9F%E6%B4%BB/2013/11/01/rework/</link>
+        <guid isPermaLink="true">www.pentiumao.com/%E7%94%9F%E6%B4%BB/2013/11/01/rework/</guid>
+      </item>
+    
+  </channel>
+</rss>
