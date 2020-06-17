@@ -1,3 +1,5 @@
+url: "http://pentiumao.com"
+
 title: Andrew Wang
 email: pentiumao@gmail.com
 description: Android Developer
@@ -9,8 +11,20 @@ kramdown:
   math_engine: mathjax
   syntax_highlighter: rouge
 
+github: [metadata]
+
 plugins:
   - jekyll-feed
   - jekyll-redirect-from
 
-exclude: ['node_modules', 'scripts', 'vendor']
+exclude:
+  - 'node_modules'
+  - 'scripts'
+  - 'vendor'
+  - Gemfile
+  - Gemfile.lock
+  - package.json
+  - package-lock.json
+  - README.md
+  - LICENSE.txt
+  - CNAME
