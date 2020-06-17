@@ -1,0 +1,16 @@
+title: Andrew Wang
+email: pentiumao@gmail.com
+description: Android Developer
+incremental: false
+highlighter: rouge
+gist:
+  noscript: false
+kramdown:
+  math_engine: mathjax
+  syntax_highlighter: rouge
+
+plugins:
+  - jekyll-feed
+  - jekyll-redirect-from
+
+exclude: ['node_modules', 'scripts', 'vendor']
